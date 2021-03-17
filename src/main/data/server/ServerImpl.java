@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import main.data.models.CityWeather;
 import main.data.server.models.CityWeatherJson;
 import main.data.server.models.NetworkResponse;
+import main.data.server.utils.ConvertTemperature;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -21,7 +22,7 @@ public class ServerImpl implements Server {
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
             in = new BufferedInputStream(httpURLConnection.getInputStream());
             String json = readStream(in);
-            // System.out.println(json);
+           System.out.println( parseCityWeatherJson(json));
             return parseCityWeatherJson(json);
         } catch (IOException e) {
             e.printStackTrace();
@@ -48,10 +49,12 @@ public class ServerImpl implements Server {
     }
 
     private NetworkResponse<CityWeather> parseCityWeatherJson(String json) {
+        ConvertTemperature convertTemperature = new ConvertTemperature();
         CityWeatherJson cityWeatherJson = gson.fromJson(json, CityWeatherJson.class);
+
         int code = cityWeatherJson.cod;
-        double tempMin = cityWeatherJson.main.temp_min;
-        double tempMax = cityWeatherJson.main.temp_max;
+        double tempMin = convertTemperature.kelvinToDegree(cityWeatherJson.main.temp_min);
+        double tempMax = convertTemperature.kelvinToDegree(cityWeatherJson.main.temp_max);
         return new NetworkResponse<>(code, new CityWeather(tempMin, tempMax));
     }
 
