@@ -14,17 +14,27 @@ public class ServerImpl implements Server {
     private final Gson gson = new Gson();
 
     public NetworkResponse<CityWeather> getWeather(String cityName) {
+        InputStream in = null;
         try {
             String parameterRequest = emptyUrlPath.replace("cityName", cityName);
             URL url = new URL(parameterRequest);
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-            InputStream in = new BufferedInputStream(httpURLConnection.getInputStream());
+            in = new BufferedInputStream(httpURLConnection.getInputStream());
             String json = readStream(in);
             // System.out.println(json);
             return parseCityWeatherJson(json);
         } catch (IOException e) {
             e.printStackTrace();
             return new NetworkResponse<>(500,null);
+        } finally {
+            try {
+                if(in != null){
+                    in.close();
+                }
+            } catch (IOException ioException) {
+                System.out.println("Echec fermeture");
+                ioException.printStackTrace();
+            }
         }
     }
 
@@ -34,7 +44,6 @@ public class ServerImpl implements Server {
         for (String line = r.readLine(); line != null; line = r.readLine()) {
             sb.append(line);
         }
-        in.close();
         return sb.toString();
     }
 
