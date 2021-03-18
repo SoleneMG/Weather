@@ -10,12 +10,4 @@ public class CityWeatherJson {
         this.main = main;
         this.cod = cod;
     }
-
-    @Override
-    public String toString() {
-        return "CityWeatherJson{" +
-                "main=" + main +
-                ", code=" + cod +
-                '}';
-    }
 }

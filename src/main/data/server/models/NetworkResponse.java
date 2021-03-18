@@ -8,12 +8,4 @@ public class NetworkResponse<T> {
         this.code = code;
         this.data = data;
     }
-
-    @Override
-    public String toString() {
-        return "NetworkResponse{" +
-                "code=" + code +
-                ", data=" + data +
-                '}';
-    }
 }

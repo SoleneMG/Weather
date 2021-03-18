@@ -8,12 +8,4 @@ public class CityWeather {
         this.tempMin = tempMin;
         this.tempMax = tempMax;
     }
-
-    @Override
-    public String toString() {
-        return "CityWeather{" +
-                ", temp_min=" + tempMin +
-                ", temp_max=" + tempMax +
-                '}';
-    }
 }
