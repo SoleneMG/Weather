@@ -1,13 +1,15 @@
 package main;
 
-import main.data.server.Server;
-import main.data.server.ServerImpl;
+import main.presentation.Screen;
 
 public class Main {
 
     public static void main(String[] args) {
-        Server server = new ServerImpl();
-        server.getWeather("Manchester");
+        //Server server = new ServerImpl();
+        //server.getWeather("Manchester");
+
+        Screen screen = Inject.screen();
+        screen.build();
 
     }
 }
