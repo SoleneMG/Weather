@@ -24,8 +24,8 @@ public class ServerImpl implements Server {
             String json = readStream(in);
            System.out.println( parseCityWeatherJson(json));
             return parseCityWeatherJson(json);
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            System.out.println("Ville inconnue");
             return new NetworkResponse<>(500,null);
         } finally {
             try {
